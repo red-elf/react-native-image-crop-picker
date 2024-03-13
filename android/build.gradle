@@ -3,7 +3,6 @@ apply plugin: "com.facebook.react"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "kotlinx-serialization"
 
-
 react {
     /* Folders */
     //   The root of your project, i.e. where "package.json" lives. Default is '..'
@@ -151,4 +150,3 @@ buildscript {
     }
 }
 
-apply plugin: "com.facebook.react.rootproject"
