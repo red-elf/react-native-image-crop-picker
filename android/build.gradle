@@ -1,9 +1,10 @@
 apply plugin: "com.android.library"
 apply plugin: "com.facebook.react"
-apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "kotlinx-serialization"
+apply plugin: "org.jetbrains.kotlin.android"
 
 react {
+
     /* Folders */
     //   The root of your project, i.e. where "package.json" lives. Default is '..'
     // root = file("../")
@@ -93,12 +94,12 @@ android {
 
     dependencies {
 
-        implementation "com.facebook.react:react-android"
+        implementation "com.facebook.react:react-android:0.73.6"
         implementation "com.facebook.android:facebook-android-sdk:latest.release"
 
         if (hermesEnabled.toBoolean()) {
 
-            implementation "com.facebook.react:hermes-android"
+            implementation "com.facebook.react:hermes-android:0.73.6"
 
         } else {
 
@@ -114,6 +115,10 @@ allprojects {
 
     repositories {
 
+        maven {
+
+            url "../node_modules/react-native/android"
+        }
         maven { url "https://jitpack.io" }
         google()
         mavenLocal()
@@ -135,6 +140,10 @@ buildscript {
 
     repositories {
 
+        maven {
+
+            url "../node_modules/react-native/android"
+        }
         maven { url "https://jitpack.io" }
         google()
         mavenLocal()
