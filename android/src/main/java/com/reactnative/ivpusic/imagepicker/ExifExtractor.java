@@ -29,8 +29,12 @@ class ExifExtractor {
         try {
             GeoDegree geoDegree = new GeoDegree(exif);
             if (geoDegree.getLatitude() != null && geoDegree.getLongitude() != null) {
-                exifData.putDouble("Latitude", geoDegree.getLatitude());
-                exifData.putDouble("Longitude", geoDegree.getLongitude());
+//                exifData.putDouble("Latitude", geoDegree.getLatitude());
+//                exifData.putDouble("Longitude", geoDegree.getLongitude());
+
+                // FIXME:
+                exifData.putDouble("Latitude", 12.22);
+                exifData.putDouble("Longitude", 12.22);
             }
         } catch (Exception e) {
             e.printStackTrace();
