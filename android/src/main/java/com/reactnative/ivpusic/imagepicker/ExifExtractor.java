@@ -9,9 +9,14 @@ import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,17 +40,6 @@ class ExifExtractor {
 
         try {
 
-            ContentResolver contentResolver = activity.getContentResolver();
-
-            boolean granted = ContextCompat.checkSelfPermission(
-
-                    activity,
-                    Manifest.permission.ACCESS_MEDIA_LOCATION
-
-            ) == PackageManager.PERMISSION_GRANTED;
-
-            Log.v(logTag, "ACCESS_MEDIA_LOCATION: " + granted);
-
             exif = new ExifInterface(path);
 
             GeoDegree geoDegree = new GeoDegree(exif);
@@ -68,6 +62,27 @@ class ExifExtractor {
                 String value = exif.getAttribute(attribute);
                 exifData.putString(attribute, value);
             }
+        }
+
+        try {
+
+            Metadata metadata = ImageMetadataReader.readMetadata(new File(path));
+
+            for (Directory directory : metadata.getDirectories()) {
+                for (Tag tag : directory.getTags()) {
+
+                    String name = tag.getTagName();
+                    String value = tag.getDescription();
+
+                    // exifData.putString(name, value);
+
+                    Log.v(logTag, ">> " + name + ": " + value);
+                }
+            }
+
+        } catch (Exception e) {
+
+            Log.e(logTag, "Unable to read metadata", e);
         }
 
         return exifData;
