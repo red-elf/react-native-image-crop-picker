@@ -40,7 +40,7 @@ public class GeoDegree {
 
     private Float convertToDegree(String stringDMS) {
 
-        Float result = null;
+        float result;
         String[] DMS = stringDMS.split(",", 3);
 
         String[] stringD = DMS[0].split("/", 2);
