@@ -1,12 +1,13 @@
 package com.reactnative.ivpusic.imagepicker;
 
-import android.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 
 public class GeoDegree {
     Float latitude;
     Float longitude;
 
     public GeoDegree(ExifInterface exif) {
+
         String attrLATITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
         String attrLATITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
         String attrLONGITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
@@ -18,20 +19,27 @@ public class GeoDegree {
                 && (attrLONGITUDE_REF != null)) {
 
             if (attrLATITUDE_REF.equals("N")) {
+
                 latitude = convertToDegree(attrLATITUDE);
+
             } else {
+
                 latitude = 0 - convertToDegree(attrLATITUDE);
             }
 
             if (attrLONGITUDE_REF.equals("E")) {
+
                 longitude = convertToDegree(attrLONGITUDE);
+
             } else {
+
                 longitude = 0 - convertToDegree(attrLONGITUDE);
             }
         }
     }
 
     private Float convertToDegree(String stringDMS) {
+
         Float result = null;
         String[] DMS = stringDMS.split(",", 3);
 
