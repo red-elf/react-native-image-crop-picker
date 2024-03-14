@@ -1,5 +1,7 @@
 package com.reactnative.ivpusic.imagepicker;
 
+import android.util.Log;
+
 import androidx.exifinterface.media.ExifInterface;
 
 public class GeoDegree {
@@ -8,10 +10,35 @@ public class GeoDegree {
 
     public GeoDegree(ExifInterface exif) {
 
+        final String logTag = "GeoDegree ::";
+
         String attrLATITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
         String attrLATITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
+
+        String attrLATITUDE_Dest = exif.getAttribute(ExifInterface.TAG_GPS_DEST_LATITUDE);
+        String attrLATITUDE_Dest_REF = exif.getAttribute(ExifInterface.TAG_GPS_DEST_LATITUDE_REF);
+
         String attrLONGITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
         String attrLONGITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF);
+
+        String attrLONGITUDE_Dest = exif.getAttribute(ExifInterface.TAG_GPS_DEST_LONGITUDE);
+        String attrLONGITUDE_Dest_REF = exif.getAttribute(ExifInterface.TAG_GPS_DEST_LONGITUDE_REF);
+
+        Log.v(logTag, "- - - - - - - - - - - - - - - - - - - - - - - - -");
+
+        Log.v(logTag, "attrLATITUDE: " + attrLATITUDE);
+        Log.v(logTag, "attrLATITUDE_REF: " + attrLATITUDE_REF);
+
+        Log.v(logTag, "attrLATITUDE_Dest: " + attrLATITUDE_Dest);
+        Log.v(logTag, "attrLATITUDE_Dest_REF: " + attrLATITUDE_Dest_REF);
+
+        Log.v(logTag, "attrLONGITUDE: " + attrLONGITUDE);
+        Log.v(logTag, "attrLONGITUDE_REF: " + attrLONGITUDE_REF);
+
+        Log.v(logTag, "attrLONGITUDE_Dest: " + attrLONGITUDE_Dest);
+        Log.v(logTag, "attrLONGITUDE_Dest_REF: " + attrLONGITUDE_Dest_REF);
+
+        Log.v(logTag, "- - - - - - - - - - - - - - - - - - - - - - - - -");
 
         if ((attrLATITUDE != null)
                 && (attrLATITUDE_REF != null)
