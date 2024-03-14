@@ -698,10 +698,14 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
         }
 
         if (includeExif) {
+
             try {
+
                 WritableMap exif = ExifExtractor.extract(path);
                 image.putMap("exif", exif);
+
             } catch (Exception ex) {
+
                 ex.printStackTrace();
             }
         }

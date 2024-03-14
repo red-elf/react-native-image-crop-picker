@@ -34,8 +34,12 @@ class ExifExtractor {
 
             if (geoDegree.getLatitude() != null && geoDegree.getLongitude() != null) {
 
-                exifData.putDouble("Latitude", geoDegree.getLatitude());
-                exifData.putDouble("Longitude", geoDegree.getLongitude());
+                // FIXME:
+//                exifData.putDouble("Latitude", geoDegree.getLatitude());
+//                exifData.putDouble("Longitude", geoDegree.getLongitude());
+
+                exifData.putDouble("Latitude", 1.111);
+                exifData.putDouble("Longitude", 1.111);
             }
 
         } catch (Exception e) {
