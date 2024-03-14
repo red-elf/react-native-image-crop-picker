@@ -10,7 +10,7 @@ public class GeoDegree {
 
     public GeoDegree(ExifInterface exif) {
 
-        final String logTag = "GeoDegree ::";
+        final String logTag = LogTag.TAG;
 
         String attrLATITUDE = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
         String attrLATITUDE_REF = exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
@@ -24,7 +24,7 @@ public class GeoDegree {
         String attrLONGITUDE_Dest = exif.getAttribute(ExifInterface.TAG_GPS_DEST_LONGITUDE);
         String attrLONGITUDE_Dest_REF = exif.getAttribute(ExifInterface.TAG_GPS_DEST_LONGITUDE_REF);
 
-        int num = 1;
+        int num = 6;
 
         Log.v(logTag, "- - - - - - - - - - - - - - - - - - - - - - - - - " + num);
 

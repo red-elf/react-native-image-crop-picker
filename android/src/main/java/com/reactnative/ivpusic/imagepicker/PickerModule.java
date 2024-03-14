@@ -478,6 +478,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
     }
 
     private WritableMap getSelection(Activity activity, Uri uri, boolean isCamera) throws Exception {
+
         String path = resolveRealPath(activity, uri, isCamera);
         if (path == null || path.isEmpty()) {
             throw new Exception("Cannot resolve asset path.");
@@ -493,6 +494,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
     }
 
     private void getAsyncSelection(final Activity activity, Uri uri, boolean isCamera) throws Exception {
+
         String path = resolveRealPath(activity, uri, isCamera);
         if (path == null || path.isEmpty()) {
             resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, "Cannot resolve asset path.");
@@ -575,6 +577,11 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
     }
 
     private String resolveRealPath(Activity activity, Uri uri, boolean isCamera) throws IOException {
+
+        final String logTag = LogTag.TAG;
+
+        Log.v(logTag, "Uri: " + uri);
+
         String path;
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -701,7 +708,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
 
             try {
 
-                WritableMap exif = ExifExtractor.extract(path);
+                WritableMap exif = ExifExtractor.extract(path, activity);
                 image.putMap("exif", exif);
 
             } catch (Exception ex) {

@@ -1,7 +1,13 @@
 package com.reactnative.ivpusic.imagepicker;
 
+import androidx.core.content.ContextCompat;
 import androidx.exifinterface.media.ExifInterface;
-import android.os.Build;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
@@ -15,20 +21,32 @@ import static androidx.exifinterface.media.ExifInterface.*;
 
 class ExifExtractor {
 
-    static WritableMap extract(String path) throws IOException {
+    static WritableMap extract(String path, Activity activity) throws IOException {
+
+        final String logTag = LogTag.TAG;
 
         WritableMap exifData = new WritableNativeMap();
 
         List<String> attributes = getBasicAttributes();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        attributes.addAll(getLevel23Attributes());
 
-            attributes.addAll(getLevel23Attributes());
-        }
-
-        ExifInterface exif = new ExifInterface(path);
+        ExifInterface exif = null;
 
         try {
+
+            ContentResolver contentResolver = activity.getContentResolver();
+
+            boolean granted = ContextCompat.checkSelfPermission(
+
+                    activity,
+                    Manifest.permission.ACCESS_MEDIA_LOCATION
+
+            ) == PackageManager.PERMISSION_GRANTED;
+
+            Log.v(logTag, "ACCESS_MEDIA_LOCATION: " + granted);
+
+            exif = new ExifInterface(path);
 
             GeoDegree geoDegree = new GeoDegree(exif);
 
@@ -40,13 +58,16 @@ class ExifExtractor {
 
         } catch (Exception e) {
 
-            e.printStackTrace();
+            Log.e(logTag, "Unable to open input stream", e);
         }
 
-        for (String attribute : attributes) {
+        if (exif != null) {
 
-            String value = exif.getAttribute(attribute);
-            exifData.putString(attribute, value);
+            for (String attribute : attributes) {
+
+                String value = exif.getAttribute(attribute);
+                exifData.putString(attribute, value);
+            }
         }
 
         return exifData;
