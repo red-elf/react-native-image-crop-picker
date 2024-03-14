@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -580,7 +581,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
 
         final String logTag = LogTag.TAG;
 
-        Log.v(logTag, "Uri: " + uri);
+        Log.v(logTag, "Uri :: Current: " + uri);
 
         String path;
 

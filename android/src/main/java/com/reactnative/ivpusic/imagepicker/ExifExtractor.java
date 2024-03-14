@@ -64,26 +64,26 @@ class ExifExtractor {
             }
         }
 
-        try {
-
-            Metadata metadata = ImageMetadataReader.readMetadata(new File(path));
-
-            for (Directory directory : metadata.getDirectories()) {
-                for (Tag tag : directory.getTags()) {
-
-                    String name = tag.getTagName();
-                    String value = tag.getDescription();
-
-                    // exifData.putString(name, value);
-
-                    Log.v(logTag, ">> " + name + ": " + value);
-                }
-            }
-
-        } catch (Exception e) {
-
-            Log.e(logTag, "Unable to read metadata", e);
-        }
+//        try {
+//
+//            Metadata metadata = ImageMetadataReader.readMetadata(new File(path));
+//
+//            for (Directory directory : metadata.getDirectories()) {
+//                for (Tag tag : directory.getTags()) {
+//
+//                    String name = tag.getTagName();
+//                    String value = tag.getDescription();
+//
+//                    // exifData.putString(name, value);
+//
+//                    Log.v(logTag, ">> " + name + ": " + value);
+//                }
+//            }
+//
+//        } catch (Exception e) {
+//
+//            Log.e(logTag, "Unable to read metadata", e);
+//        }
 
         return exifData;
     }
