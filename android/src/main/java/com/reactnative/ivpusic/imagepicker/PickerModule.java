@@ -21,7 +21,9 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.exifinterface.media.ExifInterface;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Callback;
@@ -580,6 +582,38 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
     private String resolveRealPath(Activity activity, Uri uri, boolean isCamera) throws IOException {
 
         final String logTag = LogTag.TAG;
+
+        Uri photoUri = MediaStore.setRequireOriginal(uri);
+
+        Log.v(logTag, "Uri :: New :: " + photoUri);
+
+        InputStream stream = activity.getContentResolver().openInputStream(photoUri);
+
+        Log.v(logTag, "Uri :: Stream :: " + stream);
+
+        if (stream != null) {
+
+            ExifInterface exif = new ExifInterface(stream);
+
+            Log.v(logTag, ">>>>>> " + exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE));
+
+            float[] latLong = new float[2];
+
+            if (exif.getLatLong(latLong)) {
+
+                Log.v(logTag, ">>>>>> " + Arrays.toString(latLong));
+
+            } else {
+
+                Log.e(logTag, ">>>>>> " + Arrays.toString(latLong));
+            }
+
+            stream.close();
+
+        } else {
+
+            Log.e(logTag, "Could not handle uri");
+        }
 
         Log.v(logTag, "Uri :: Current: " + uri);
 

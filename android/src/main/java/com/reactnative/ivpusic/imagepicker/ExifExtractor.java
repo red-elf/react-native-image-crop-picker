@@ -31,38 +31,35 @@ class ExifExtractor {
         final String logTag = LogTag.TAG;
 
         WritableMap exifData = new WritableNativeMap();
-
         List<String> attributes = getBasicAttributes();
 
         attributes.addAll(getLevel23Attributes());
 
-        ExifInterface exif = null;
+        ExifInterface exif = new ExifInterface(path);
+        GeoDegree geoDegree = new GeoDegree(exif);
 
-        try {
+        if (geoDegree.getLatitude() != null && geoDegree.getLongitude() != null) {
 
-            exif = new ExifInterface(path);
-
-            GeoDegree geoDegree = new GeoDegree(exif);
-
-            if (geoDegree.getLatitude() != null && geoDegree.getLongitude() != null) {
-
-                exifData.putDouble("Latitude", geoDegree.getLatitude());
-                exifData.putDouble("Longitude", geoDegree.getLongitude());
-            }
-
-        } catch (Exception e) {
-
-            Log.e(logTag, "Unable to open input stream", e);
+            exifData.putDouble("Latitude", geoDegree.getLatitude());
+            exifData.putDouble("Longitude", geoDegree.getLongitude());
         }
 
-        if (exif != null) {
+        for (String attribute : attributes) {
 
-            for (String attribute : attributes) {
-
-                String value = exif.getAttribute(attribute);
-                exifData.putString(attribute, value);
-            }
+            String value = exif.getAttribute(attribute);
+            exifData.putString(attribute, value);
         }
+
+//        float[] latLong = new float[2];
+//
+//        if (exif.getLatLong(latLong)) {
+//
+//            Log.v(logTag, ">>>>>> " + Arrays.toString(latLong));
+//
+//        } else {
+//
+//            Log.e(logTag, ">>>>>> " + Arrays.toString(latLong));
+//        }
 
 //        try {
 //
